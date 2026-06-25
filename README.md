@@ -1,4 +1,4 @@
-# MCHel Rating Site — GitHub Pages公開用
+# Mchel Rating Site — GitHub Pages公開用
 
 このフォルダは、そのままGitHub DesktopでGitHubにアップロードし、GitHub Pagesで無料公開するための公開用プロジェクトです。
 

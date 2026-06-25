@@ -1,0 +1,33 @@
+{
+  "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
+  "input_rows": 23727,
+  "rows_after_deduplication": 23727,
+  "course_count": 285,
+  "eligible_course_count": 205,
+  "eligible_course_rule": "ranking_row_count == 100",
+  "official_player_count": 174,
+  "official_player_rule": "eligible_course_count >= 30",
+  "best_n": 30,
+  "weight_parameters": {
+    "type": "right_shifted_inverse_logistic",
+    "midpoint": 20.0,
+    "steepness": 0.18,
+    "position_1_weight": 1.0,
+    "position_30_weight": 0.5
+  },
+  "course_score_formula": "100 * course_record_time_ms / player_time_ms",
+  "published_rating_formula": "R = 100 + 1100 * (h(P)-h(0))/(h(100)-h(0)); h(P)=ln((P+0.5)/(100.5-P))",
+  "published_rating_range": [
+    100.0,
+    1200.0
+  ],
+  "tier_counts": {
+    "D": 0,
+    "C": 15,
+    "B": 66,
+    "A": 62,
+    "S": 23,
+    "SS": 7,
+    "SSS": 1
+  }
+}

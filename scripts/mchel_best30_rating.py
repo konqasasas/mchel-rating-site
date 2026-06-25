@@ -48,7 +48,7 @@ Rating specification
 
 Outputs:
   overall_ranking.csv
-  best30_components.csv
+  best30_components.csv  (includes original course rank)
   course_summary.csv
   rating_metadata.json
   weight_curve.png
@@ -94,6 +94,7 @@ REQUIRED_COLUMNS = {
     "player_name",
     "player_uuid",
     "time_ms",
+    "rank",
 }
 
 
@@ -413,6 +414,7 @@ def calculate_ratings(input_csv: Path, out_dir: Path) -> pd.DataFrame:
         "best30_position",
         "weight",
         "course_name",
+        "rank",
         "time_ms",
         "course_record_time_ms",
         "course_score",

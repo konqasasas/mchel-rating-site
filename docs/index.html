@@ -3,19 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MCHel 1.12.2アスレチックの公開タイムアタックランキングから算出した総合レート。">
+  <meta name="description" content="MCHel 1.12.2アスレチックの公開スピードランランキングから算出した、非公式の総合レートランキング。">
   <meta name="robots" content="index,follow">
-  <title>総合ランキング | MCHel 1.12.2 アスレチック総合レート</title>
+  <title>総合ランキング | ちぇる鯖アスレチック 総合レートランキング</title>
   <link rel="stylesheet" href="static/style.css">
   <script defer src="static/app.js"></script>
 </head>
 <body>
 
+<div class="unofficial-notice" role="note">
+  <div class="notice-inner">
+    <strong>非公式</strong>
+    <span>ファンメイドの集計サイトです。MCHel公式とは関係ありません。</span>
+  </div>
+</div>
+
+
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html" aria-label="トップへ">
       <span class="brand-mark">M</span>
-      <span><strong>MCHel Rating</strong><small>1.12.2 Athletic</small></span>
+      <span><strong>Mchel Speedrun Rating</strong><small>1.12.2 Athletic</small></span>
     </a>
     <nav class="main-nav" aria-label="メインナビゲーション">
       <a class="nav-link active" href="index.html">総合ランキング</a>
@@ -28,11 +36,18 @@
 
 <section class="hero">
   <div class="container hero-grid">
-    <div>
-      <p class="eyebrow">MINECRAFT JAPAN COMMUNITY SERVER</p>
-      <h1>アスレチック<br><span>総合レートランキング</span></h1>
-      <p class="hero-copy">1.12.2の公開タイムアタック記録をもとに、プレイヤーごとの上位30コースを評価した非公式総合ランキングです。</p>
-      <div class="hero-actions"><a class="button primary" href="#ranking">ランキングを見る</a><a class="button ghost" href="about.html">算出方法</a></div>
+    <div class="hero-content">
+      <div class="unofficial-chip"><b>非公式</b><span>ファンメイドの集計</span></div>
+      <p class="eyebrow">MCHEL 1.12.2 SPEEDRUN</p>
+      <h1 class="hero-title">
+        <span class="hero-title-line title-main">ちぇる鯖アスレチック</span>
+        <span class="hero-title-line title-sub">総合レートランキング</span>
+      </h1>
+      <p class="hero-copy">1.12.2の公開スピードラン記録をもとに、プレイヤーごとの上位30コースを評価した非公式総合ランキングです。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#ranking">ランキングを見る</a>
+        <a class="button ghost" href="about.html">算出方法</a>
+      </div>
     </div>
     <aside class="hero-card" aria-label="集計概要">
       <p class="card-kicker">CURRENT SNAPSHOT</p>
@@ -40,9 +55,9 @@
         <div><strong>174</strong><span>公式対象プレイヤー</span></div>
         <div><strong>205</strong><span>対象コース</span></div>
         <div><strong>1,200</strong><span>最高レート</span></div>
-        <div><strong>30</strong><span>採用記録数</span></div>
+        <div><strong>30</strong><span>採用コース数</span></div>
       </div>
-      <p class="small-muted">更新：2026年6月26日 04:43 JST</p>
+      <p class="small-muted">更新：2026年6月26日 06:01 JST</p>
     </aside>
   </div>
 </section>
@@ -51,7 +66,7 @@
     <div>
       <p class="eyebrow">LEADERBOARD</p>
       <h2>総合ランキング</h2>
-      <p>プレイヤー名をクリックすると、採用されたBest 30の詳細を見られます。</p>
+      <p>プレイヤー名をクリックすると、採用された上位30コースの詳細を見られます。</p>
     </div>
     <span id="visible-count" class="result-count">174 人表示中</span>
   </div>
@@ -62,7 +77,7 @@
   </div>
   <div class="table-wrap">
     <table class="ranking-table">
-      <thead><tr><th>順位</th><th>プレイヤー</th><th>Tier</th><th>レート</th><th>対象コース<br>ランクイン数</th><th>最高<br>コーススコア</th><th>Best 30<br>最低スコア</th></tr></thead>
+      <thead><tr><th>順位</th><th>プレイヤー</th><th>Tier</th><th>レート</th><th>対象コース<br>ランクイン数</th><th>最高<br>コーススコア</th><th>上位30コース<br>最低スコア</th></tr></thead>
       <tbody>
 <tr data-player-row data-name="yukked0n" data-tier="SSS" data-rank="1">
   <td class="rank-cell">1</td>
@@ -1640,7 +1655,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <p>非公式・ファンメイドの集計サイトです。記録データは公開ランキングAPIをもとに集計しています。</p>
-    <p>最終データ取得：<time>2026年6月26日 04:43 JST</time></p>
+    <p>最終データ取得：<time>2026年6月26日 06:01 JST</time></p>
   </div>
 </footer>
 

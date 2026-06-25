@@ -1,14 +1,10 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-<<<<<<< HEAD
-  "updated": "2026年6月26日 02:17 JST",
-=======
-  "updated": "2026年6月26日 06:12 JST",
->>>>>>> 80b92e26fbcd207c66f2c32ce52399d9ef4f5bc7
+  "updated": "2026年6月26日 06:20 JST",
   "player_count": 174,
   "player_page_count": 174,
   "rating_metadata": {
-    "input_csv": "/mnt/data/mchel_1_12_2_rankings_excluding_seasonal.csv",
+    "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
     "input_rows": 23727,
     "rows_after_deduplication": 23727,
     "course_count": 285,

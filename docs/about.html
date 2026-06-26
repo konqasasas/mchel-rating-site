@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mchel 1.12.2アスレチックの公開スピードランランキングから算出した、非公式の総合レートランキング。">
+  <meta name="robots" content="index,follow">
+  <title>レートについて | ちぇる鯖アスレチック 総合レートランキング</title>
+  <link rel="stylesheet" href="static/style.css">
+  <script defer src="static/app.js"></script>
+</head>
+<body>
+
+<div class="unofficial-notice" role="note">
+  <div class="notice-inner">
+    <strong>非公式</strong>
+    <span>Mchel公式とは関係ありません。</span>
+  </div>
+</div>
+
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="トップへ">
+      <span class="brand-mark">M</span>
+      <span><strong>Mchel Speedrun Rating</strong><small>1.12.2 Athletic</small></span>
+    </a>
+    <nav class="main-nav" aria-label="メインナビゲーション">
+      <a class="nav-link" href="index.html">総合ランキング</a>
+      <a class="nav-link active" href="about.html">レートについて</a>
+      <a class="nav-link" href="courses.html">コース難易度</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="subhero">
+  <div class="container">
+    <div class="unofficial-chip compact"><b>非公式</b></div>
+    <p class="eyebrow">METHODOLOGY · RATING V1</p>
+    <h1>レートについて</h1>
+    <p>公開スピードランランキングを、コースごとの1位難易度を加味して比較する総合レートです。</p>
+  </div>
+</section>
+<section class="container section prose">
+  <div class="method-grid">
+    <article class="method-card"><span>01</span><h2>対象コース</h2><p>取得時点でランキングが上位100件まで埋まっているコースだけを対象にします。現在の対象は <strong>205コース</strong> です。</p></article>
+    <article class="method-card"><span>02</span><h2>基本スコア</h2><p>各コースの1位タイムを100点とし、<code>100 × 1位タイム ÷ 自分のタイム</code> で評価します。1位記録は100点です。</p></article>
+    <article class="method-card"><span>03</span><h2>1位難易度</h2><p>1位の突出率と上位帯の競争率を組み合わせ、両方が高いコースほど評価を上乗せします。倍率は <code>1 + 0.10 × 難易度</code> です。</p></article>
+    <article class="method-card"><span>04</span><h2>上位30コース</h2><p>対象コースへのランクインが 30件以上のプレイヤーが正式レート対象です。各人の補正スコアが高い 30コースだけを採用します。</p></article>
+    <article class="method-card"><span>05</span><h2>重み付き平均</h2><p>採用コースは上位側を少し重くしつつ、30位の記録も評価します。重みは1位=1.00、30位=0.50です。</p></article>
+    <article class="method-card"><span>06</span><h2>公開レート</h2><p>生の実力指数Pを2段階の変換で公開レートにします。P=100はレート1000、理論上の数式上限は1600です。</p></article>
+  </div>
+
+  <section class="difficulty-method" aria-labelledby="difficulty-method-title">
+    <div class="difficulty-method-heading">
+      <p class="eyebrow">COURSE DIFFICULTY</p>
+      <h2 id="difficulty-method-title">1位難易度は、突出率と競争率から求めます</h2>
+      <p>ここでいう難易度はコース全体の難しさではなく、<strong>1位に近いタイムを出す難しさ</strong>です。各対象コースの上位10記録を比較し、現在の対象コース群の中で相対評価します。</p>
+    </div>
+    <div class="difficulty-factor-grid">
+      <article class="difficulty-factor"><span class="factor-number">A</span><h3>突出率</h3><p>1位タイムが2〜5位タイムの中央値からどれだけ抜けているかを見ます。1位が上位集団より明確に速いほど高くなります。</p><code>ln(2〜5位中央値 ÷ 1位タイム)</code></article>
+      <article class="difficulty-factor"><span class="factor-number">B</span><h3>競争率</h3><p>2〜10位のタイムがどれだけ詰まっているかを見ます。上位帯が僅差で密集しているほど高くなります。</p><code>2〜10位の広がりを逆方向に評価</code></article>
+      <article class="difficulty-factor"><span class="factor-number">A + B</span><h3>1位難易度</h3><p>突出率と競争率をコース群の中でパーセンタイル化し、調和平均で合成します。どちらか一方だけが高いコースは過大評価しません。</p><code>難易度 → 最大約+10%</code></article>
+    </div>
+    <p class="difficulty-method-note">各値は対象コース内での相対値です。コース追加・改変や難易度表の更新時には変動することがあります。</p>
+    <a class="button primary" href="courses.html">現在のコース難易度表を見る</a>
+  </section>
+
+  <h2>ランク</h2>
+  <div class="tier-explainer tier-explainer-v1">
+    <div><b>EX</b><span>1300–1600</span></div><div><b>S+</b><span>1250–1299.99</span></div><div><b>S</b><span>1200–1249.99</span></div><div><b>A+</b><span>1150–1199.99</span></div><div><b>A</b><span>1100–1149.99</span></div><div><b>B+</b><span>1050–1099.99</span></div><div><b>B</b><span>1000–1049.99</span></div><div><b>B-</b><span>950–999.99</span></div><div><b>C+</b><span>900–949.99</span></div><div><b>C</b><span>850–899.99</span></div><div><b>C-</b><span>800–849.99</span></div><div><b>D+</b><span>750–799.99</span></div><div><b>D</b><span>700–749.99</span></div><div><b>E</b><span>100–699.99</span></div>
+  </div>
+  
+<section class="rank-distribution" aria-labelledby="rank-distribution-title">
+  <div class="rank-distribution-heading">
+    <div>
+      <p class="eyebrow">CURRENT DISTRIBUTION</p>
+      <h2 id="rank-distribution-title">ランク別分布</h2>
+      <p>現在の正式レート対象 <strong>174人</strong> を、公開ランクごとに表示しています。</p>
+    </div>
+  </div>
+  <div class="rank-distribution-list">
+    
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-ex">EX</span></div>
+  <div class="rank-distribution-track" aria-label="EX 1人、0.6%">
+    <span class="rank-distribution-fill tier-fill-ex" style="width: 0.575%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>1</strong><span>人</span><small>0.6%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-splus">S+</span></div>
+  <div class="rank-distribution-track" aria-label="S+ 2人、1.1%">
+    <span class="rank-distribution-fill tier-fill-splus" style="width: 1.149%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>2</strong><span>人</span><small>1.1%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-s">S</span></div>
+  <div class="rank-distribution-track" aria-label="S 3人、1.7%">
+    <span class="rank-distribution-fill tier-fill-s" style="width: 1.724%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>3</strong><span>人</span><small>1.7%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-aplus">A+</span></div>
+  <div class="rank-distribution-track" aria-label="A+ 6人、3.4%">
+    <span class="rank-distribution-fill tier-fill-aplus" style="width: 3.448%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>6</strong><span>人</span><small>3.4%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-a">A</span></div>
+  <div class="rank-distribution-track" aria-label="A 6人、3.4%">
+    <span class="rank-distribution-fill tier-fill-a" style="width: 3.448%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>6</strong><span>人</span><small>3.4%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-bplus">B+</span></div>
+  <div class="rank-distribution-track" aria-label="B+ 6人、3.4%">
+    <span class="rank-distribution-fill tier-fill-bplus" style="width: 3.448%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>6</strong><span>人</span><small>3.4%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-b">B</span></div>
+  <div class="rank-distribution-track" aria-label="B 10人、5.7%">
+    <span class="rank-distribution-fill tier-fill-b" style="width: 5.747%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>10</strong><span>人</span><small>5.7%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-bminus">B-</span></div>
+  <div class="rank-distribution-track" aria-label="B- 17人、9.8%">
+    <span class="rank-distribution-fill tier-fill-bminus" style="width: 9.770%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>17</strong><span>人</span><small>9.8%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-cplus">C+</span></div>
+  <div class="rank-distribution-track" aria-label="C+ 19人、10.9%">
+    <span class="rank-distribution-fill tier-fill-cplus" style="width: 10.920%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>19</strong><span>人</span><small>10.9%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-c">C</span></div>
+  <div class="rank-distribution-track" aria-label="C 24人、13.8%">
+    <span class="rank-distribution-fill tier-fill-c" style="width: 13.793%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>24</strong><span>人</span><small>13.8%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-cminus">C-</span></div>
+  <div class="rank-distribution-track" aria-label="C- 22人、12.6%">
+    <span class="rank-distribution-fill tier-fill-cminus" style="width: 12.644%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>22</strong><span>人</span><small>12.6%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-dplus">D+</span></div>
+  <div class="rank-distribution-track" aria-label="D+ 24人、13.8%">
+    <span class="rank-distribution-fill tier-fill-dplus" style="width: 13.793%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>24</strong><span>人</span><small>13.8%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-d">D</span></div>
+  <div class="rank-distribution-track" aria-label="D 14人、8.0%">
+    <span class="rank-distribution-fill tier-fill-d" style="width: 8.046%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>14</strong><span>人</span><small>8.0%</small></div>
+</div>
+<div class="rank-distribution-row">
+  <div class="rank-distribution-label"><span class="tier tier-e">E</span></div>
+  <div class="rank-distribution-track" aria-label="E 20人、11.5%">
+    <span class="rank-distribution-fill tier-fill-e" style="width: 11.494%"></span>
+  </div>
+  <div class="rank-distribution-value"><strong>20</strong><span>人</span><small>11.5%</small></div>
+</div>
+  </div>
+</section>
+
+
+  <h2>カタログ制約付き理論最大値</h2>
+  <p>現在の難易度表で難易度が高い30コースすべてを1位で走った場合の理論値は <strong>1,374.08</strong> です。新コース追加や難易度表の更新時には変動します。</p>
+  <h2>重要な注意</h2>
+  <ul>
+    <li>データは各コースの公開ランキング上位100件のみです。ランキング外は未挑戦と101位以下を区別できないため、未掲載を減点には使いません。</li>
+    <li>期間限定アスレチックは対象外です。</li>
+    <li>1位難易度は、コース全体の難しさではなく「1位に近い記録を出す難しさ」を表す指標です。</li>
+    <li>難易度表は日ごとに変えず、月次またはコース追加・改変時に見直す想定です。</li>
+    <li>これは非公式の集計です。元データの正確性、ゲーム内の公式評価、プレイヤーの総合的な実力を保証するものではありません。</li>
+  </ul>
+  <p class="updated-callout">数式バージョン：<code>mchel_time_attack_rating_v1</code><br>難易度表：<code>—</code><br>現在のデータ取得日時：2026年6月26日 02:17 JST</p>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>非公式サイトです。記録データは公開ランキングAPIをもとに集計しています。</p>
+    <p>最終データ取得：<time>2026年6月26日 02:17 JST</time></p>
+  </div>
+</footer>
+
+</body>
+</html>

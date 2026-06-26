@@ -1,0 +1,121 @@
+name: Update Mchel rating site
+
+on:
+  # 09:17 JST every day (00:17 UTC). A non-zero minute reduces the chance of
+  # delay during GitHub Actions' busy top-of-hour window.
+  schedule:
+    - cron: "17 0 * * *"
+  workflow_dispatch:
+    inputs:
+      refresh_difficulty:
+        description: "1位難易度表を現在のランキングから再計算して固定し直す"
+        required: false
+        default: false
+        type: boolean
+
+# The workflow needs only repository-content write access to commit the rebuilt
+# docs/ site, compact daily rating history, and the frozen difficulty table.
+permissions:
+  contents: write
+
+# Do not let a manual run and the scheduled run rebuild the site simultaneously.
+concurrency:
+  group: mchel-rating-update
+  cancel-in-progress: false
+
+env:
+  DIFFICULTY_TABLE: data/difficulty/mchel_time_attack_rating_v1.csv
+  DIFFICULTY_VERSION_FILE: data/difficulty/version.txt
+  REFRESH_DIFFICULTY: ${{ inputs.refresh_difficulty || 'false' }}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && pip install -r requirements.txt
+
+      - name: Fetch public ranking APIs
+        run: python scripts/fetch_rankings.py --out-dir work/latest
+
+      - name: Calculate ratings with the v1 difficulty policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p data/difficulty
+
+          if [[ "$REFRESH_DIFFICULTY" == "true" || ! -f "$DIFFICULTY_TABLE" ]]; then
+            VERSION="mchel_time_attack_rating_v1_difficulty_$(TZ=Asia/Tokyo date +%F)"
+            echo "Calculating and pinning a difficulty table: $VERSION"
+            python scripts/mchel_time_attack_rating_v1.py \
+              work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
+              --out-dir work/rating \
+              --difficulty-version "$VERSION"
+            cp work/rating/course_difficulty.csv "$DIFFICULTY_TABLE"
+            printf '%s\n' "$VERSION" > "$DIFFICULTY_VERSION_FILE"
+          else
+            VERSION="$(tr -d '\r\n' < "$DIFFICULTY_VERSION_FILE" 2>/dev/null || true)"
+            if [[ -z "$VERSION" ]]; then
+              VERSION="mchel_time_attack_rating_v1_difficulty_pinned"
+              printf '%s\n' "$VERSION" > "$DIFFICULTY_VERSION_FILE"
+            fi
+            echo "Using frozen difficulty table: $VERSION"
+            python scripts/mchel_time_attack_rating_v1.py \
+              work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
+              --out-dir work/rating \
+              --difficulty-table "$DIFFICULTY_TABLE" \
+              --difficulty-version "$VERSION"
+          fi
+
+      - name: Save compact history snapshot
+        run: >-
+          python scripts/archive_rating_snapshot.py
+          --overall-csv work/rating/overall_ranking.csv
+          --metadata-json work/rating/rating_metadata.json
+          --course-summary-csv work/rating/course_summary.csv
+          --course-difficulty-csv work/rating/course_difficulty.csv
+          --run-summary-json work/latest/mchel_1_12_2_run_summary_excluding_seasonal.json
+          --data-dir data
+
+      - name: Rebuild GitHub Pages site
+        run: >-
+          python build_site.py
+          --overall-csv work/rating/overall_ranking.csv
+          --components-csv work/rating/best30_components.csv
+          --metadata-json work/rating/rating_metadata.json
+          --course-difficulty-csv work/rating/course_difficulty.csv
+          --snapshot-summary work/latest/mchel_1_12_2_run_summary_excluding_seasonal.json
+          --out-dir docs
+
+      - name: Commit and push updated site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs data
+          if git diff --cached --quiet; then
+            echo "No published changes to commit."
+          else
+            git commit -m "chore: update rating data $(TZ=Asia/Tokyo date +%F)"
+            git push
+          fi
+
+      - name: Upload diagnostics after a failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mchel-update-diagnostics-${{ github.run_id }}
+          path: work/latest
+          if-no-files-found: ignore
+          retention-days: 7

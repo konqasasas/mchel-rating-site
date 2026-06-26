@@ -95,6 +95,7 @@ jobs:
           --overall-csv work/rating/overall_ranking.csv
           --components-csv work/rating/best30_components.csv
           --metadata-json work/rating/rating_metadata.json
+          --course-difficulty-csv work/rating/course_difficulty.csv
           --snapshot-summary work/latest/mchel_1_12_2_run_summary_excluding_seasonal.json
           --out-dir docs
 

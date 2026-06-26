@@ -1,2 +1,0 @@
-# The daily GitHub Actions workflow writes compact current data and one
-# overall-rating CSV per JST day under this directory.

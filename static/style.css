@@ -148,22 +148,113 @@ td { color: var(--text); font-size: .91rem; }
 .player-cell a { color: var(--text); font-weight: 800; text-decoration: none; }
 .player-cell a:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 4px; }
 .rating-cell { color: #B7BCFF; font-weight: 900; font-variant-numeric: tabular-nums; }
-.tier { min-width: 40px; padding: 4px 7px; display: inline-grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 6px; color: #fff; background: #303349; font-size: .72rem; font-weight: 900; letter-spacing: .04em; }
-/* Rank color is the status indicator. Overall rank numbers remain neutral. */
-.tier-ex     { color: #271A00; background: #FFD35A; border-color: #FFEAA1; box-shadow: 0 0 18px rgba(255, 211, 90, .18); }
-.tier-splus  { color: #2A1600; background: #F3A647; border-color: #FFD08A; }
-.tier-s      { color: #211800; background: #D5B44E; border-color: #F1D978; }
-.tier-aplus  { color: #111A2E; background: #91B3F3; border-color: #B8D0FF; }
-.tier-a      { color: #111A2A; background: #709BDD; border-color: #9ABCF0; }
-.tier-bplus  { color: #121924; background: #6782AD; border-color: #8DA7D0; }
-.tier-b      { color: #11141A; background: #7A879C; border-color: #9BA6B8; }
-.tier-bminus { color: #DDE1E7; background: #596474; border-color: #748196; }
-.tier-cplus  { color: #DDE1E7; background: #4F5A70; border-color: #69758B; }
-.tier-c      { color: #DDE1E7; background: #454D5A; border-color: #616B7B; }
-.tier-cminus { color: #D2D6DD; background: #3C434E; border-color: #535D6A; }
-.tier-dplus  { color: #C5CBD4; background: #333944; border-color: #48515F; }
-.tier-d      { color: #BAC0CA; background: #2A2E38; border-color: #3D4350; }
-.tier-e      { color: #A7ADB8; background: #20232B; border-color: #343A46; }
+/* Tier badges — Rating v1 */
+.tier {
+  min-width: 44px;
+  padding: 4px 8px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  color: #fff;
+  background: #303349;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  line-height: 1.15;
+}
+/* Overall rank numbers remain neutral; the Tier badge is the status color. */
+.tier-ex {
+  color: #2A1B00;
+  background: linear-gradient(135deg, #FFE99A, #E7AE32);
+  border-color: #FFF2BF;
+  box-shadow: 0 0 18px rgba(255, 217, 111, .22);
+}
+.tier-splus {
+  color: #2B1700;
+  background: #FFB35C;
+  border-color: #FFD197;
+  box-shadow: 0 0 14px rgba(255, 179, 92, .13);
+}
+.tier-s {
+  color: #32120F;
+  background: #ED806F;
+  border-color: #FFA99D;
+}
+.tier-aplus {
+  color: #29183A;
+  background: #D6A1FF;
+  border-color: #E7C6FF;
+}
+.tier-a {
+  color: #171A42;
+  background: #A0A6FF;
+  border-color: #C1C5FF;
+}
+.tier-bplus {
+  color: #111A2E;
+  background: #80A8FF;
+  border-color: #A7C2FF;
+}
+.tier-b {
+  color: #10192D;
+  background: #6B85D0;
+  border-color: #94A9E6;
+}
+.tier-bminus {
+  color: #E2E9F4;
+  background: #4F607F;
+  border-color: #7386A8;
+}
+.tier-cplus {
+  color: #092A27;
+  background: #76C8B6;
+  border-color: #9AE0D1;
+}
+.tier-c {
+  color: #E1F1EE;
+  background: #3D7F74;
+  border-color: #5FA69A;
+}
+.tier-cminus {
+  color: #D8E9E6;
+  background: #315F59;
+  border-color: #4A8179;
+}
+.tier-dplus {
+  color: #E0E5ED;
+  background: #424955;
+  border-color: #606B7A;
+}
+.tier-d {
+  color: #C9D0DA;
+  background: #303641;
+  border-color: #495462;
+}
+.tier-e {
+  color: #AAB2BD;
+  background: #242933;
+  border-color: #39414D;
+}
+
+/* The explainer uses the same tier palette, but keeps the overall dark surface. */
+.tier-explainer-v1 div { background: var(--tier-soft, var(--surface)); }
+.tier-explainer-v1 div b { color: var(--tier-color, #B7BCFF); }
+.tier-explainer-v1 div:nth-child(1)  { --tier-color: #FFE99A; --tier-soft: rgba(255, 217, 111, .15); }
+.tier-explainer-v1 div:nth-child(2)  { --tier-color: #FFB35C; --tier-soft: rgba(255, 179, 92, .13); }
+.tier-explainer-v1 div:nth-child(3)  { --tier-color: #ED806F; --tier-soft: rgba(237, 128, 111, .13); }
+.tier-explainer-v1 div:nth-child(4)  { --tier-color: #D6A1FF; --tier-soft: rgba(214, 161, 255, .12); }
+.tier-explainer-v1 div:nth-child(5)  { --tier-color: #A0A6FF; --tier-soft: rgba(160, 166, 255, .12); }
+.tier-explainer-v1 div:nth-child(6)  { --tier-color: #80A8FF; --tier-soft: rgba(128, 168, 255, .12); }
+.tier-explainer-v1 div:nth-child(7)  { --tier-color: #8EA7EB; --tier-soft: rgba(107, 133, 208, .12); }
+.tier-explainer-v1 div:nth-child(8)  { --tier-color: #8CA0C2; --tier-soft: rgba(79, 96, 127, .15); }
+.tier-explainer-v1 div:nth-child(9)  { --tier-color: #76C8B6; --tier-soft: rgba(118, 200, 182, .11); }
+.tier-explainer-v1 div:nth-child(10) { --tier-color: #78B7AD; --tier-soft: rgba(61, 127, 116, .15); }
+.tier-explainer-v1 div:nth-child(11) { --tier-color: #65958E; --tier-soft: rgba(49, 95, 89, .17); }
+.tier-explainer-v1 div:nth-child(12) { --tier-color: #A9B3C2; --tier-soft: rgba(66, 73, 85, .25); }
+.tier-explainer-v1 div:nth-child(13) { --tier-color: #8C97A7; --tier-soft: rgba(48, 54, 65, .28); }
+.tier-explainer-v1 div:nth-child(14) { --tier-color: #727D8C; --tier-soft: rgba(36, 41, 51, .32); }
+
 .table-note { margin: 13px 0 0; color: var(--muted); font-size: .82rem; }
 
 .player-hero, .subhero { padding: 66px 0 52px; border-bottom: 1px solid var(--line); background: linear-gradient(135deg, rgba(24, 25, 34, .9), rgba(13, 14, 19, .35)); }

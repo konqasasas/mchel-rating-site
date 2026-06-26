@@ -37,33 +37,36 @@
 <section class="subhero">
   <div class="container">
     <div class="unofficial-chip compact"><b>非公式</b></div>
-    <p class="eyebrow">METHODOLOGY</p>
+    <p class="eyebrow">METHODOLOGY · RATING V1</p>
     <h1>レートについて</h1>
-    <p>公開スピードランランキングを、コース間で比較できる総合レートへ変換するためのルールです。</p>
+    <p>公開スピードランランキングを、コースごとの1位難易度を加味して比較する総合レートです。</p>
   </div>
 </section>
 <section class="container section prose">
   <div class="method-grid">
     <article class="method-card"><span>01</span><h2>対象コース</h2><p>取得時点でランキングが上位100件まで埋まっているコースだけを対象にします。現在の対象は <strong>205コース</strong> です。</p></article>
-    <article class="method-card"><span>02</span><h2>コーススコア</h2><p>各コースの1位タイムを100点とし、<code>100 × 1位タイム ÷ プレイヤータイム</code> で評価します。タイムが速いほど100に近づきます。</p></article>
-    <article class="method-card"><span>03</span><h2>上位30コース</h2><p>対象コースへのランクインが 30件以上のプレイヤーが総合順位の対象です。各人の最も高い 30コースを使用します。</p></article>
-    <article class="method-card"><span>04</span><h2>重み付き平均</h2><p>上位30コースの上位側を少し重くしつつ、30位の記録も評価に反映します。重みは1位=1.00、30位=0.50です。</p></article>
-    <article class="method-card"><span>05</span><h2>公開レート</h2><p>重み付き平均の素点Pを有限soft-logitで変換し、100〜1200の公開レートにします。P=100は1200です。</p></article>
-    <article class="method-card"><span>06</span><h2>日次更新</h2><p>1日1回のスナップショットを取得して再計算します。記録更新や1位タイムの更新によりレートは変動します。</p></article>
+    <article class="method-card"><span>02</span><h2>基本スコア</h2><p>各コースの1位タイムを100点とし、<code>100 × 1位タイム ÷ 自分のタイム</code> で評価します。1位記録は100点です。</p></article>
+    <article class="method-card"><span>03</span><h2>1位難易度</h2><p>1位の突出度と、2〜10位の密集度をカタログ内で比較し、両方が高いコースほど評価を上乗せします。倍率は <code>1 + 0.10 × 難易度</code> です。</p></article>
+    <article class="method-card"><span>04</span><h2>上位30コース</h2><p>対象コースへのランクインが 30件以上のプレイヤーが正式レート対象です。各人の補正スコアが高い 30コースだけを採用します。</p></article>
+    <article class="method-card"><span>05</span><h2>重み付き平均</h2><p>採用コースは上位側を少し重くしつつ、30位の記録も評価します。重みは1位=1.00、30位=0.50です。</p></article>
+    <article class="method-card"><span>06</span><h2>公開レート</h2><p>生の実力指数Pを2段階の変換で公開レートにします。P=100はレート1000、理論上の数式上限は1600です。</p></article>
   </div>
-  <h2>Tier</h2>
-  <div class="tier-explainer">
-    <div><b>SSS</b><span>1200.00</span></div><div><b>SS</b><span>1100.00–1199.99</span></div><div><b>S</b><span>1000.00–1099.99</span></div><div><b>A</b><span>900.00–999.99</span></div><div><b>B</b><span>800.00–899.99</span></div><div><b>C</b><span>700.00–799.99</span></div><div><b>D</b><span>100.00–699.99</span></div>
+  <h2>ランク</h2>
+  <div class="tier-explainer tier-explainer-v1">
+    <div><b>EX</b><span>1300–1600</span></div><div><b>S+</b><span>1250–1299.99</span></div><div><b>S</b><span>1200–1249.99</span></div><div><b>A+</b><span>1150–1199.99</span></div><div><b>A</b><span>1100–1149.99</span></div><div><b>B+</b><span>1050–1099.99</span></div><div><b>B</b><span>1000–1049.99</span></div><div><b>B-</b><span>950–999.99</span></div><div><b>C+</b><span>900–949.99</span></div><div><b>C</b><span>850–899.99</span></div><div><b>C-</b><span>800–849.99</span></div><div><b>D+</b><span>750–799.99</span></div><div><b>D</b><span>700–749.99</span></div><div><b>E</b><span>100–699.99</span></div>
   </div>
-  <p class="small-muted">現在の対象者内訳：D 0人, C 15人, B 66人, A 62人, S 23人, SS 7人, SSS 1人</p>
+  <p class="small-muted">現在の対象者内訳：E 20人, D 14人, D+ 24人, C- 22人, C 24人, C+ 19人, B- 17人, B 10人, B+ 6人, A 6人, A+ 6人, S 3人, S+ 2人, EX 1人</p>
+  <h2>カタログ制約付き理論最大値</h2>
+  <p>現在の難易度表で難易度が高い30コースすべてを1位で走った場合の理論値は <strong>1,374.08</strong> です。新コース追加や難易度表の更新時には変動します。</p>
   <h2>重要な注意</h2>
   <ul>
     <li>データは各コースの公開ランキング上位100件のみです。ランキング外は未挑戦と101位以下を区別できないため、未掲載を減点には使いません。</li>
     <li>期間限定アスレチックは対象外です。</li>
+    <li>1位難易度は、コース全体の難しさではなく「1位に近い記録を出す難しさ」を表す指標です。</li>
+    <li>難易度表は日ごとに変えず、月次またはコース追加・改変時に見直す想定です。</li>
     <li>これは非公式の集計です。元データの正確性、ゲーム内の公式評価、プレイヤーの総合的な実力を保証するものではありません。</li>
-    <li>現在の参加条件：<code>eligible_course_count &gt;= 30</code>。</li>
   </ul>
-  <p class="updated-callout">現在のデータ取得日時：2026年6月26日 06:20 JST</p>
+  <p class="updated-callout">数式バージョン：<code>mchel_time_attack_rating_v1</code><br>難易度表：<code>mchel_time_attack_rating_v1_difficulty_2026-06-26</code><br>現在のデータ取得日時：2026年6月26日 09:50 JST</p>
 </section>
 
 </main>
@@ -71,7 +74,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <p>非公式サイトです。記録データは公開ランキングAPIをもとに集計しています。</p>
-    <p>最終データ取得：<time>2026年6月26日 06:20 JST</time></p>
+    <p>最終データ取得：<time>2026年6月26日 09:50 JST</time></p>
   </div>
 </footer>
 

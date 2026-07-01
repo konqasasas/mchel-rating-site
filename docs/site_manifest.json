@@ -1,20 +1,20 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-  "updated": "2026年6月30日 13:36 JST",
-  "player_count": 175,
-  "player_page_count": 175,
+  "updated": "2026年7月1日 13:56 JST",
+  "player_count": 174,
+  "player_page_count": 174,
   "rating_metadata": {
     "formula_version": "mchel_time_attack_rating_v1",
     "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-06-26",
     "difficulty_source": "frozen_difficulty_table",
     "difficulty_table": "/home/runner/work/mchel-rating-site/mchel-rating-site/data/difficulty/mchel_time_attack_rating_v1.csv",
     "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
-    "input_rows": 23737,
-    "rows_after_player_course_deduplication": 23737,
+    "input_rows": 23738,
+    "rows_after_player_course_deduplication": 23738,
     "course_count": 285,
     "eligible_course_count": 205,
     "eligible_course_rule": "Course has exactly 100 valid, deduplicated player-course rows.",
-    "official_player_count": 175,
+    "official_player_count": 174,
     "official_player_rule": "Player has results on at least 30 eligible courses.",
     "scoring": {
       "base_course_score": "100 * course_record_time_ms / player_time_ms",
@@ -64,7 +64,7 @@
       }
     },
     "tier_counts": {
-      "E": 21,
+      "E": 20,
       "D": 14,
       "D+": 24,
       "C-": 22,

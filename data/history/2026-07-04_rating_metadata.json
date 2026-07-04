@@ -1,0 +1,88 @@
+{
+  "formula_version": "mchel_time_attack_rating_v1",
+  "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-06-26",
+  "difficulty_source": "frozen_difficulty_table",
+  "difficulty_table": "/home/runner/work/mchel-rating-site/mchel-rating-site/data/difficulty/mchel_time_attack_rating_v1.csv",
+  "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
+  "input_rows": 23740,
+  "rows_after_player_course_deduplication": 23740,
+  "course_count": 285,
+  "eligible_course_count": 205,
+  "eligible_course_rule": "Course has exactly 100 valid, deduplicated player-course rows.",
+  "official_player_count": 175,
+  "official_player_rule": "Player has results on at least 30 eligible courses.",
+  "scoring": {
+    "base_course_score": "100 * course_record_time_ms / player_time_ms",
+    "difficulty_multiplier": "1 + 0.10 * first_place_difficulty",
+    "difficulty_adjusted_course_score": "base_course_score * difficulty_multiplier",
+    "best_n": 30,
+    "best30_weight": {
+      "type": "right_shifted_inverse_logistic",
+      "midpoint": 20.0,
+      "steepness": 0.18,
+      "position_1_weight": 1.0,
+      "position_30_weight": 0.5
+    }
+  },
+  "course_difficulty": {
+    "first_place_outlierness_raw": "ln(median(rank2..rank5 time) / rank1 time)",
+    "top_density_spread_raw": "ln(rank10 time / rank2 time)",
+    "top_density": "Reverse mid-rank percentile of top_density_spread_raw",
+    "first_place_difficulty": "Harmonic mean of outlierness percentile and top-density percentile"
+  },
+  "rating_transform": {
+    "raw_formula_range": [
+      0.0,
+      110.00000000000001
+    ],
+    "normal_segment": {
+      "raw_range": [
+        0,
+        100
+      ],
+      "rating_range": [
+        100,
+        1000
+      ],
+      "formula": "h(P)=ln((P+50)/(105-P)); R=100+900*(h(P)-h(0))/(h(100)-h(0))"
+    },
+    "elite_segment": {
+      "raw_range": [
+        100,
+        110
+      ],
+      "rating_range": [
+        1000,
+        1600
+      ],
+      "formula": "x=P-100; g(x)=ln((x+26.25)/(410-x)); R=1000+600*(g(x)-g(0))/(g(10)-g(0))"
+    }
+  },
+  "tier_counts": {
+    "E": 21,
+    "D": 14,
+    "D+": 24,
+    "C-": 22,
+    "C": 24,
+    "C+": 19,
+    "B-": 17,
+    "B": 10,
+    "B+": 6,
+    "A": 6,
+    "A+": 6,
+    "S": 3,
+    "S+": 2,
+    "EX": 1
+  },
+  "catalog_constrained_theoretical_max": {
+    "definition": "First place on the 30 currently highest-difficulty courses, with the current difficulty table frozen.",
+    "raw_performance_index": 105.88183862220329,
+    "published_rating": 1374.0761681532724,
+    "tier": "EX"
+  },
+  "mathematical_formula_ceiling": {
+    "raw_performance_index": 110.00000000000001,
+    "published_rating": 1600.0,
+    "note": "Requires all 30 selected courses to have difficulty 1.0; not currently possible with the catalog."
+  }
+}

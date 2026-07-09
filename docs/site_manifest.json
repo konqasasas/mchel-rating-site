@@ -1,8 +1,8 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-  "updated": "2026年7月8日 12:48 JST",
-  "player_count": 175,
-  "player_page_count": 175,
+  "updated": "2026年7月9日 13:16 JST",
+  "player_count": 176,
+  "player_page_count": 176,
   "rating_metadata": {
     "formula_version": "mchel_time_attack_rating_v1",
     "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-06-26",
@@ -14,7 +14,7 @@
     "course_count": 285,
     "eligible_course_count": 205,
     "eligible_course_rule": "Course has exactly 100 valid, deduplicated player-course rows.",
-    "official_player_count": 175,
+    "official_player_count": 176,
     "official_player_rule": "Player has results on at least 30 eligible courses.",
     "scoring": {
       "base_course_score": "100 * course_record_time_ms / player_time_ms",
@@ -64,7 +64,7 @@
       }
     },
     "tier_counts": {
-      "E": 20,
+      "E": 21,
       "D": 14,
       "D+": 24,
       "C-": 22,

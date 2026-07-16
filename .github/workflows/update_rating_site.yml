@@ -6,15 +6,9 @@ on:
   schedule:
     - cron: "17 0 * * *"
   workflow_dispatch:
-    inputs:
-      refresh_difficulty:
-        description: "1位難易度表を現在のランキングから再計算して固定し直す"
-        required: false
-        default: false
-        type: boolean
 
 # The workflow needs only repository-content write access to commit the rebuilt
-# docs/ site, compact daily rating history, and the frozen difficulty table.
+# docs/ site, compact daily rating history, and the daily difficulty table.
 permissions:
   contents: write
 
@@ -26,7 +20,6 @@ concurrency:
 env:
   DIFFICULTY_TABLE: data/difficulty/mchel_time_attack_rating_v1.csv
   DIFFICULTY_VERSION_FILE: data/difficulty/version.txt
-  REFRESH_DIFFICULTY: ${{ inputs.refresh_difficulty || 'false' }}
 
 jobs:
   update:
@@ -50,34 +43,19 @@ jobs:
       - name: Fetch public ranking APIs
         run: python scripts/fetch_rankings.py --out-dir work/latest
 
-      - name: Calculate ratings with the v1 difficulty policy
+      - name: Recalculate the v1 difficulty table and ratings
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p data/difficulty
-
-          if [[ "$REFRESH_DIFFICULTY" == "true" || ! -f "$DIFFICULTY_TABLE" ]]; then
-            VERSION="mchel_time_attack_rating_v1_difficulty_$(TZ=Asia/Tokyo date +%F)"
-            echo "Calculating and pinning a difficulty table: $VERSION"
-            python scripts/mchel_time_attack_rating_v1.py \
-              work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
-              --out-dir work/rating \
-              --difficulty-version "$VERSION"
-            cp work/rating/course_difficulty.csv "$DIFFICULTY_TABLE"
-            printf '%s\n' "$VERSION" > "$DIFFICULTY_VERSION_FILE"
-          else
-            VERSION="$(tr -d '\r\n' < "$DIFFICULTY_VERSION_FILE" 2>/dev/null || true)"
-            if [[ -z "$VERSION" ]]; then
-              VERSION="mchel_time_attack_rating_v1_difficulty_pinned"
-              printf '%s\n' "$VERSION" > "$DIFFICULTY_VERSION_FILE"
-            fi
-            echo "Using frozen difficulty table: $VERSION"
-            python scripts/mchel_time_attack_rating_v1.py \
-              work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
-              --out-dir work/rating \
-              --difficulty-table "$DIFFICULTY_TABLE" \
-              --difficulty-version "$VERSION"
-          fi
+          VERSION="mchel_time_attack_rating_v1_difficulty_$(TZ=Asia/Tokyo date +%F)"
+          echo "Recalculating the difficulty table: $VERSION"
+          python scripts/mchel_time_attack_rating_v1.py \
+            work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
+            --out-dir work/rating \
+            --difficulty-version "$VERSION"
+          cp work/rating/course_difficulty.csv "$DIFFICULTY_TABLE"
+          printf '%s\n' "$VERSION" > "$DIFFICULTY_VERSION_FILE"
 
       - name: Save compact history snapshot
         run: >-

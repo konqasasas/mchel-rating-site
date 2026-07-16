@@ -486,7 +486,7 @@ def build_about(metadata: dict[str, Any], updated: str) -> str:
     <li>データは各コースの公開ランキング上位100件のみです。ランキング外は未挑戦と101位以下を区別できないため、未掲載を減点には使いません。</li>
     <li>期間限定アスレチックは対象外です。</li>
     <li>1位難易度は、コース全体の難しさではなく「1位に近い記録を出す難しさ」を表す指標です。</li>
-    <li>難易度表は日ごとに変えず、月次またはコース追加・改変時に見直す想定です。</li>
+    <li>難易度表は、毎日のランキング取得時に最新データから再計算されます。</li>
     <li>これは非公式の集計です。元データの正確性、ゲーム内の公式評価、プレイヤーの総合的な実力を保証するものではありません。</li>
   </ul>
   <p class="updated-callout">数式バージョン：<code>{escape(formula_version)}</code><br>難易度表：<code>{escape(difficulty_version)}</code><br>現在のデータ取得日時：{escape(updated)}</p>

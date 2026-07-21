@@ -3,6 +3,7 @@
 60mとんとん走,matataki,100,100,100,3190,True
 Aequor,normal,100,100,100,110310,True
 Alley,normal,100,100,100,37747,True
+Alticlus,normal,100,100,100,248840,True
 Annus novus,normal,100,100,100,91306,True
 Archaic arcade,normal,100,100,100,284459,True
 Athletic Memory,normal,100,100,100,177851,True
@@ -205,21 +206,20 @@ slowly melt,normal,100,100,100,84904,True
 鯉の滝登り,matataki,100,100,100,26670,True
 黄泉の国,normal,100,100,100,29550,True
 ｱｯﾂｲﾕｶ,matataki,100,100,100,13950,True
-Alticlus,normal,99,99,99,248840,False
 challenge11,challenge,98,98,98,110827,False
 challenge12,challenge,98,98,98,367194,False
 ヒトトセの旅,kuwaty,98,98,98,49950,False
+イモムシTA,matataki,95,95,95,16197,False
 田舎,kuwaty,95,95,95,60498,False
 challenge8,challenge,94,94,94,133217,False
-イモムシTA,matataki,93,93,93,16197,False
-Ultra Niwatori Planet,normal,88,88,88,347128,False
+Ultra Niwatori Planet,normal,90,90,90,347128,False
 challenge6,challenge,88,88,88,253422,False
+Vestige,normal,87,87,87,349990,False
 はやいはやいアスレ NORMAL,kuwaty,86,86,86,38698,False
-Vestige,normal,85,85,85,349990,False
+"""HELLO, THE COMPUTER WORLD!""_",normal,84,84,84,280824,False
+Obserath,normal,82,82,82,299236,False
 Waza08,waza,82,82,82,249863,False
-"""HELLO, THE COMPUTER WORLD!""_",normal,81,81,81,280824,False
 元祖HARD,normal,81,81,81,115924,False
-Obserath,normal,80,80,80,299236,False
 POTETO City,kuwaty,76,76,76,41956,False
 challenge13,challenge,75,75,75,461676,False
 異空の架け橋,kuwaty,74,74,74,83154,False
@@ -232,8 +232,8 @@ Intermediate Ordeal,normal,72,72,72,126848,False
 廃別荘,kuwaty,64,64,64,120001,False
 challenge7,challenge,60,60,60,285884,False
 白い神殿,kuwaty,58,58,58,31000,False
+ジャブジャブ,matataki,56,56,56,14649,False
 トライセクション,hard,55,55,55,126086,False
-ジャブジャブ,matataki,54,54,54,14649,False
 うおーさおー,matataki,53,53,53,45868,False
 deep sea,normal,51,51,51,49346,False
 NigHt,hard,48,48,48,233912,False
@@ -245,14 +245,14 @@ Blizzard Road,hard,37,37,37,255406,False
 はやいはやいアスレ HARD,kuwaty,32,32,32,29698,False
 5 Jumps to Chelcy Archive,hard,31,31,31,30291,False
 Move around,hard,31,31,31,225388,False
+どんどこどん,matataki,31,31,31,11553,False
 tattata section,hard,29,29,29,90726,False
 Pink Paradise,hard,27,27,27,236406,False
-どんどこどん,matataki,27,27,27,11553,False
+うねうね,matataki,27,27,27,18449,False
 Waza11,waza,26,26,26,726167,False
 challenge15,challenge,24,24,24,1077256,False
 オルタネイト,hard,24,24,24,170747,False
 爆風アスレチック2,normal,24,24,24,52667,False
-うねうね,matataki,22,22,22,18449,False
 All Waza TA,waza,21,21,21,3494836,False
 poison quarry,normal,21,21,21,48302,False
 challenge14,challenge,19,19,19,776476,False

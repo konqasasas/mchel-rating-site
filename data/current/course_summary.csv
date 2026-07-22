@@ -1,6 +1,6 @@
 ﻿course_name,category,raw_ranking_row_count,ranking_row_count,unique_players,course_record_time_ms,eligible_for_overall
 5thタワー,kuwaty,100,100,100,60995,True
-60mとんとん走,matataki,100,100,100,3190,True
+60mとんとん走,matataki,100,100,100,2806,True
 Aequor,normal,100,100,100,110310,True
 Alley,normal,100,100,100,37747,True
 Alticlus,normal,100,100,100,248840,True
@@ -209,7 +209,7 @@ slowly melt,normal,100,100,100,84904,True
 challenge11,challenge,98,98,98,110827,False
 challenge12,challenge,98,98,98,367194,False
 ヒトトセの旅,kuwaty,98,98,98,49950,False
-イモムシTA,matataki,95,95,95,16197,False
+イモムシTA,matataki,97,97,97,16197,False
 田舎,kuwaty,95,95,95,60498,False
 challenge8,challenge,94,94,94,133217,False
 Ultra Niwatori Planet,normal,90,90,90,347128,False
@@ -242,10 +242,10 @@ Waza09,waza,48,48,48,284963,False
 スライムでぴょーん,kuwaty,45,45,45,26442,False
 赤と白の砂漠,kuwaty,42,42,42,45400,False
 Blizzard Road,hard,37,37,37,255406,False
+どんどこどん,matataki,32,32,32,11553,False
 はやいはやいアスレ HARD,kuwaty,32,32,32,29698,False
 5 Jumps to Chelcy Archive,hard,31,31,31,30291,False
 Move around,hard,31,31,31,225388,False
-どんどこどん,matataki,31,31,31,11553,False
 tattata section,hard,29,29,29,90726,False
 Pink Paradise,hard,27,27,27,236406,False
 うねうね,matataki,27,27,27,18449,False

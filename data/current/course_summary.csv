@@ -1,6 +1,6 @@
 ﻿course_name,category,raw_ranking_row_count,ranking_row_count,unique_players,course_record_time_ms,eligible_for_overall
 5thタワー,kuwaty,100,100,100,60995,True
-60mとんとん走,matataki,100,100,100,2806,True
+60mとんとん走,matataki,100,100,100,3190,True
 Aequor,normal,100,100,100,110310,True
 Alley,normal,100,100,100,37747,True
 Alticlus,normal,100,100,100,248840,True
@@ -89,7 +89,7 @@ Waza05,waza,100,100,100,124399,True
 Waza06,waza,100,100,100,177549,True
 Waza07,waza,100,100,100,184434,True
 Waza10,waza,100,100,100,254350,True
-Whaels herd,normal,100,100,100,58148,True
+Whaels herd,normal,100,100,100,57850,True
 White Flowers,normal,100,100,100,66500,True
 Winter World,normal,100,100,100,58454,True
 Wood and Cave and...,normal,100,100,100,156101,True
@@ -211,8 +211,8 @@ challenge11,challenge,98,98,98,110827,False
 challenge12,challenge,98,98,98,367194,False
 ヒトトセの旅,kuwaty,98,98,98,49950,False
 田舎,kuwaty,95,95,95,60498,False
+Ultra Niwatori Planet,normal,94,94,94,347128,False
 challenge8,challenge,94,94,94,133217,False
-Ultra Niwatori Planet,normal,93,93,93,347128,False
 Vestige,normal,93,93,93,346737,False
 """HELLO, THE COMPUTER WORLD!""_",normal,89,89,89,280824,False
 challenge6,challenge,88,88,88,253422,False

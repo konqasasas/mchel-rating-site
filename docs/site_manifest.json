@@ -1,16 +1,16 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-  "updated": "2026年8月3日 12:58 JST",
+  "updated": "2026年8月4日 12:41 JST",
   "player_count": 174,
   "player_page_count": 174,
   "rating_metadata": {
     "formula_version": "mchel_time_attack_rating_v1",
-    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-08-03",
+    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-08-04",
     "difficulty_source": "calculated_from_current_snapshot",
     "difficulty_table": null,
     "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
-    "input_rows": 23859,
-    "rows_after_player_course_deduplication": 23859,
+    "input_rows": 23873,
+    "rows_after_player_course_deduplication": 23873,
     "course_count": 285,
     "eligible_course_count": 207,
     "eligible_course_rule": "Course has exactly 100 valid, deduplicated player-course rows.",
@@ -81,8 +81,8 @@
     },
     "catalog_constrained_theoretical_max": {
       "definition": "First place on the 30 currently highest-difficulty courses, with the current difficulty table frozen.",
-      "raw_performance_index": 105.89648331431107,
-      "published_rating": 1374.9255824920738,
+      "raw_performance_index": 105.89737296108812,
+      "published_rating": 1374.977171876775,
       "tier": "EX"
     },
     "mathematical_formula_ceiling": {

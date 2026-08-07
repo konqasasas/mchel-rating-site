@@ -146,7 +146,7 @@ slowly melt,normal,100,100,100,84904,True
 ジャングルジム-マツ-,kuwaty,100,100,100,24604,True
 スルスル,matataki,100,100,100,9850,True
 ツリーアスレ,normal,100,100,100,26649,True
-テクニックコース,matataki,100,100,100,21319,True
+テクニックコース,matataki,100,100,100,21245,True
 バイアスバイオーム,normal,100,100,100,840113,True
 バイオームミックス,normal,100,100,100,448597,True
 バイオームロード,normal,100,100,100,737343,True
@@ -204,7 +204,7 @@ slowly melt,normal,100,100,100,84904,True
 雪魄氷姿,normal,100,100,100,101250,True
 飛び水,matataki,100,100,100,22563,True
 飛べないんご,kuwaty,100,100,100,36798,True
-鯉の滝登り,matataki,100,100,100,26670,True
+鯉の滝登り,matataki,100,100,100,26590,True
 黄泉の国,normal,100,100,100,29997,True
 ｱｯﾂｲﾕｶ,matataki,100,100,100,13950,True
 ヒトトセの旅,kuwaty,99,99,99,49950,False
@@ -212,10 +212,10 @@ challenge11,challenge,98,98,98,110827,False
 challenge12,challenge,98,98,98,367194,False
 Ultra Niwatori Planet,normal,97,97,97,347128,False
 Vestige,normal,97,97,97,346737,False
+"""HELLO, THE COMPUTER WORLD!""_",normal,95,95,95,280824,False
 田舎,kuwaty,95,95,95,60498,False
 challenge8,challenge,94,94,94,133217,False
-"""HELLO, THE COMPUTER WORLD!""_",normal,93,93,93,280824,False
-Obserath,normal,88,88,88,299236,False
+Obserath,normal,90,90,90,299236,False
 challenge6,challenge,88,88,88,253422,False
 はやいはやいアスレ NORMAL,kuwaty,87,87,87,38698,False
 Waza08,waza,82,82,82,249863,False
@@ -243,7 +243,7 @@ Waza09,waza,48,48,48,284963,False
 スライムでぴょーん,kuwaty,46,46,46,26442,False
 赤と白の砂漠,kuwaty,42,42,42,45400,False
 Blizzard Road,hard,37,37,37,255406,False
-うねうね,matataki,33,33,33,18449,False
+うねうね,matataki,33,33,33,18301,False
 はやいはやいアスレ HARD,kuwaty,33,33,33,29698,False
 5 Jumps to Chelcy Archive,hard,31,31,31,30291,False
 Move around,hard,31,31,31,225388,False

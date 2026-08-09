@@ -1,20 +1,20 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-  "updated": "2026年8月8日 11:23 JST",
-  "player_count": 175,
-  "player_page_count": 175,
+  "updated": "2026年8月9日 11:31 JST",
+  "player_count": 177,
+  "player_page_count": 177,
   "rating_metadata": {
     "formula_version": "mchel_time_attack_rating_v1",
-    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-08-08",
+    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-08-09",
     "difficulty_source": "calculated_from_current_snapshot",
     "difficulty_table": null,
     "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
-    "input_rows": 23887,
-    "rows_after_player_course_deduplication": 23887,
+    "input_rows": 23889,
+    "rows_after_player_course_deduplication": 23889,
     "course_count": 285,
-    "eligible_course_count": 208,
+    "eligible_course_count": 209,
     "eligible_course_rule": "Course has exactly 100 valid, deduplicated player-course rows.",
-    "official_player_count": 175,
+    "official_player_count": 177,
     "official_player_rule": "Player has results on at least 30 eligible courses.",
     "scoring": {
       "base_course_score": "100 * course_record_time_ms / player_time_ms",
@@ -64,25 +64,25 @@
       }
     },
     "tier_counts": {
-      "E": 18,
-      "D": 10,
-      "D+": 26,
+      "E": 20,
+      "D": 11,
+      "D+": 25,
       "C-": 24,
-      "C": 26,
-      "C+": 19,
+      "C": 25,
+      "C+": 20,
       "B-": 18,
       "B": 7,
       "B+": 7,
       "A": 7,
       "A+": 7,
-      "S": 3,
-      "S+": 2,
+      "S": 4,
+      "S+": 1,
       "EX": 1
     },
     "catalog_constrained_theoretical_max": {
       "definition": "First place on the 30 currently highest-difficulty courses, with the current difficulty table frozen.",
-      "raw_performance_index": 105.90413806185376,
-      "published_rating": 1375.369427717915,
+      "raw_performance_index": 105.9201528164344,
+      "published_rating": 1376.2976967382688,
       "tier": "EX"
     },
     "mathematical_formula_ceiling": {
@@ -91,5 +91,5 @@
       "note": "Requires all 30 selected courses to have difficulty 1.0; not currently possible with the catalog."
     }
   },
-  "course_difficulty_count": 208
+  "course_difficulty_count": 209
 }

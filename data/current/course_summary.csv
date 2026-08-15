@@ -35,7 +35,7 @@ Elementary_course,normal,100,100,100,93849,True
 End Maverick,normal,100,100,100,77702,True
 Escape from U.L.,normal,100,100,100,439868,True
 Fantasia,normal,100,100,100,74467,True
-Feel Nature,normal,100,100,100,205396,True
+Feel Nature,normal,100,100,100,204651,True
 GABA,normal,100,100,100,90552,True
 GABA2,normal,100,100,100,66847,True
 GABA3,normal,100,100,100,112090,True
@@ -209,13 +209,13 @@ slowly melt,normal,100,100,100,84904,True
 鯉の滝登り,matataki,100,100,100,26590,True
 黄泉の国,normal,100,100,100,29997,True
 ｱｯﾂｲﾕｶ,matataki,100,100,100,13950,True
+"""HELLO, THE COMPUTER WORLD!""_",normal,99,99,99,280824,False
 ヒトトセの旅,kuwaty,99,99,99,49950,False
 challenge11,challenge,98,98,98,110827,False
 challenge12,challenge,98,98,98,367194,False
-"""HELLO, THE COMPUTER WORLD!""_",normal,96,96,96,280824,False
+Obserath,normal,97,97,97,299236,False
 田舎,kuwaty,95,95,95,60498,False
 challenge8,challenge,94,94,94,133217,False
-Obserath,normal,93,93,93,299236,False
 challenge6,challenge,88,88,88,253422,False
 はやいはやいアスレ NORMAL,kuwaty,87,87,87,38698,False
 Waza08,waza,82,82,82,249863,False
@@ -230,7 +230,7 @@ Intermediate Ordeal,normal,74,74,74,126848,False
 はやいはやいアスレ EASY,kuwaty,67,67,67,33850,False
 バベルの小塔,kuwaty,64,64,64,41895,False
 廃別荘,kuwaty,64,64,64,120001,False
-ジャブジャブ,matataki,62,62,62,14649,False
+ジャブジャブ,matataki,63,63,63,14649,False
 challenge7,challenge,60,60,60,285884,False
 白い神殿,kuwaty,58,58,58,31000,False
 どんどこどん,matataki,57,57,57,11553,False

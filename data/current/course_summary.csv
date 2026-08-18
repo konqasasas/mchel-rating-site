@@ -1,4 +1,5 @@
 ﻿course_name,category,raw_ranking_row_count,ranking_row_count,unique_players,course_record_time_ms,eligible_for_overall
+"""HELLO, THE COMPUTER WORLD!""_",normal,100,100,100,280824,True
 5thタワー,kuwaty,100,100,100,60995,True
 60mとんとん走,matataki,100,100,100,3189,True
 Aequor,normal,100,100,100,110310,True
@@ -209,11 +210,10 @@ slowly melt,normal,100,100,100,84904,True
 鯉の滝登り,matataki,100,100,100,26590,True
 黄泉の国,normal,100,100,100,29997,True
 ｱｯﾂｲﾕｶ,matataki,100,100,100,13950,True
-"""HELLO, THE COMPUTER WORLD!""_",normal,99,99,99,280824,False
 ヒトトセの旅,kuwaty,99,99,99,49950,False
+Obserath,normal,98,98,98,299236,False
 challenge11,challenge,98,98,98,110827,False
 challenge12,challenge,98,98,98,367194,False
-Obserath,normal,97,97,97,299236,False
 田舎,kuwaty,95,95,95,60498,False
 challenge8,challenge,94,94,94,133217,False
 challenge6,challenge,88,88,88,253422,False

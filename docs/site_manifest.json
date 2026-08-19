@@ -1,18 +1,18 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-  "updated": "2026年8月18日 10:52 JST",
+  "updated": "2026年8月19日 10:54 JST",
   "player_count": 177,
   "player_page_count": 177,
   "rating_metadata": {
     "formula_version": "mchel_time_attack_rating_v1",
-    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-08-18",
+    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-08-19",
     "difficulty_source": "calculated_from_current_snapshot",
     "difficulty_table": null,
     "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
-    "input_rows": 23917,
-    "rows_after_player_course_deduplication": 23917,
+    "input_rows": 23919,
+    "rows_after_player_course_deduplication": 23919,
     "course_count": 285,
-    "eligible_course_count": 211,
+    "eligible_course_count": 212,
     "eligible_course_rule": "Course has exactly 100 valid, deduplicated player-course rows.",
     "official_player_count": 177,
     "official_player_rule": "Player has results on at least 30 eligible courses.",
@@ -70,8 +70,8 @@
       "C-": 22,
       "C": 24,
       "C+": 21,
-      "B-": 17,
-      "B": 9,
+      "B-": 18,
+      "B": 8,
       "B+": 6,
       "A": 8,
       "A+": 7,
@@ -81,8 +81,8 @@
     },
     "catalog_constrained_theoretical_max": {
       "definition": "First place on the 30 currently highest-difficulty courses, with the current difficulty table frozen.",
-      "raw_performance_index": 105.92844145045947,
-      "published_rating": 1376.777966817278,
+      "raw_performance_index": 105.92342917844203,
+      "published_rating": 1376.4875532870167,
       "tier": "EX"
     },
     "mathematical_formula_ceiling": {
@@ -91,5 +91,5 @@
       "note": "Requires all 30 selected courses to have difficulty 1.0; not currently possible with the catalog."
     }
   },
-  "course_difficulty_count": 211
+  "course_difficulty_count": 212
 }

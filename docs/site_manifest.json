@@ -1,11 +1,11 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-  "updated": "2026年9月15日 13:59 JST",
+  "updated": "2026年9月16日 13:54 JST",
   "player_count": 176,
   "player_page_count": 176,
   "rating_metadata": {
     "formula_version": "mchel_time_attack_rating_v1",
-    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-09-15",
+    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-09-16",
     "difficulty_source": "calculated_from_current_snapshot",
     "difficulty_table": null,
     "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
@@ -65,8 +65,8 @@
     },
     "tier_counts": {
       "E": 17,
-      "D": 13,
-      "D+": 26,
+      "D": 12,
+      "D+": 27,
       "C-": 23,
       "C": 22,
       "C+": 22,

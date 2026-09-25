@@ -1,11 +1,11 @@
 {
   "title": "ちぇる鯖アスレチック 総合レートランキング",
-  "updated": "2026年9月24日 13:58 JST",
+  "updated": "2026年9月25日 14:02 JST",
   "player_count": 176,
   "player_page_count": 176,
   "rating_metadata": {
     "formula_version": "mchel_time_attack_rating_v1",
-    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-09-24",
+    "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-09-25",
     "difficulty_source": "calculated_from_current_snapshot",
     "difficulty_table": null,
     "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
@@ -81,8 +81,8 @@
     },
     "catalog_constrained_theoretical_max": {
       "definition": "First place on the 30 currently highest-difficulty courses, with the current difficulty table frozen.",
-      "raw_performance_index": 105.9141689867976,
-      "published_rating": 1375.9509036343495,
+      "raw_performance_index": 105.9048400315606,
+      "published_rating": 1375.410125158857,
       "tier": "EX"
     },
     "mathematical_formula_ceiling": {

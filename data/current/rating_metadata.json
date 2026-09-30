@@ -1,11 +1,11 @@
 {
   "formula_version": "mchel_time_attack_rating_v1",
-  "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-09-30",
+  "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-10-01",
   "difficulty_source": "calculated_from_current_snapshot",
   "difficulty_table": null,
   "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
-  "input_rows": 23926,
-  "rows_after_player_course_deduplication": 23926,
+  "input_rows": 23927,
+  "rows_after_player_course_deduplication": 23927,
   "course_count": 285,
   "eligible_course_count": 212,
   "eligible_course_rule": "Course has exactly 100 valid, deduplicated player-course rows.",
@@ -24,6 +24,34 @@
       "position_30_weight": 0.5
     }
   },
+  "grade_thresholds": {
+    "SS": "Raw Score = 100.000 (tied course record)",
+    "S+": "Raw Score >= 99.5",
+    "S": "Raw Score >= 99.0",
+    "A+": "Raw Score >= 98.0",
+    "A": "Raw Score >= 96.5",
+    "B+": "Raw Score >= 95.0",
+    "B": "Raw Score >= 92.5",
+    "C+": "Raw Score >= 90.0",
+    "C": "Raw Score < 90.0"
+  },
+  "tier_thresholds": {
+    "Grandmaster": 1300,
+    "Master I": 1250,
+    "Master II": 1200,
+    "Diamond I": 1150,
+    "Diamond II": 1100,
+    "Platinum I": 1050,
+    "Platinum II": 1000,
+    "Gold I": 950,
+    "Gold II": 900,
+    "Silver I": 850,
+    "Silver II": 800,
+    "Bronze I": 750,
+    "Bronze II": 700,
+    "Iron": 100
+  },
+  "display_top_n": 40,
   "course_difficulty": {
     "first_place_outlierness_raw": "ln(median(rank2..rank5 time) / rank1 time)",
     "top_density_spread_raw": "ln(rank10 time / rank2 time)",
@@ -59,26 +87,26 @@
     }
   },
   "tier_counts": {
-    "E": 17,
-    "D": 12,
-    "D+": 27,
-    "C-": 23,
-    "C": 23,
-    "C+": 21,
-    "B-": 17,
-    "B": 9,
-    "B+": 6,
-    "A": 7,
-    "A+": 8,
-    "S": 3,
-    "S+": 2,
-    "EX": 1
+    "Iron": 17,
+    "Bronze II": 12,
+    "Bronze I": 27,
+    "Silver II": 23,
+    "Silver I": 23,
+    "Gold II": 21,
+    "Gold I": 17,
+    "Platinum II": 9,
+    "Platinum I": 6,
+    "Diamond II": 7,
+    "Diamond I": 8,
+    "Master II": 3,
+    "Master I": 2,
+    "Grandmaster": 1
   },
   "catalog_constrained_theoretical_max": {
     "definition": "First place on the 30 currently highest-difficulty courses, with the current difficulty table frozen.",
-    "raw_performance_index": 105.90287815666856,
-    "published_rating": 1375.2963813226213,
-    "tier": "EX"
+    "raw_performance_index": 105.89828539594669,
+    "published_rating": 1375.030081345754,
+    "tier": "Grandmaster"
   },
   "mathematical_formula_ceiling": {
     "raw_performance_index": 110.00000000000001,

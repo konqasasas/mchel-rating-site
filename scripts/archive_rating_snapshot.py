@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
-"""Archive compact daily rating outputs for later rating-history features.
+"""Archive the minimum persistent state needed by the rating site.
 
-Raw rankings are deliberately not committed every day: they are several MB and
-would make the Git repository grow quickly. The compact overall_ranking.csv is
-sufficient for later player-rating trend charts and is stored once per JST day.
-
-The active course-difficulty table and metadata are archived too. This keeps
-historical ratings auditable when the difficulty table is deliberately refreshed.
+Daily history keeps only overall_ranking.csv because it is enough for player
+rating charts, Peak Rating and Weekly comparisons.  Difficulty is archived
+only when the monthly table is refreshed.  Current player-course state is
+replaced in-place and is used to detect the next run's activity events.
 """
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import shutil
 from datetime import datetime
@@ -21,14 +20,17 @@ JST = ZoneInfo("Asia/Tokyo")
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--overall-csv", type=Path, required=True)
-    parser.add_argument("--metadata-json", type=Path, required=True)
-    parser.add_argument("--course-summary-csv", type=Path, required=True)
-    parser.add_argument("--course-difficulty-csv", type=Path, required=True)
-    parser.add_argument("--run-summary-json", type=Path, required=True)
-    parser.add_argument("--data-dir", type=Path, default=Path("data"))
-    return parser.parse_args()
+    p = argparse.ArgumentParser()
+    p.add_argument("--overall-csv", type=Path, required=True)
+    p.add_argument("--metadata-json", type=Path, required=True)
+    p.add_argument("--course-summary-csv", type=Path, required=True)
+    p.add_argument("--course-difficulty-csv", type=Path, required=True)
+    p.add_argument("--player-course-records-csv", type=Path, required=True)
+    p.add_argument("--course-records-csv", type=Path, required=True)
+    p.add_argument("--run-summary-json", type=Path, required=True)
+    p.add_argument("--data-dir", type=Path, default=Path("data"))
+    p.add_argument("--difficulty-refreshed", action="store_true")
+    return p.parse_args()
 
 
 def snapshot_date(summary_path: Path) -> str:
@@ -47,6 +49,26 @@ def copy(source: Path, target: Path) -> None:
     shutil.copy2(source, target)
 
 
+
+def copy_compact_player_state(source: Path, target: Path) -> None:
+    """Persist only columns needed to diff the next snapshot."""
+    columns = [
+        "player_uuid", "course_name", "rank", "time_ms",
+        "base_course_score", "grade", "difficulty_adjusted_course_score",
+    ]
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with source.open("r", encoding="utf-8-sig", newline="") as src, target.open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as dst:
+        reader = csv.DictReader(src)
+        missing = [c for c in columns if c not in (reader.fieldnames or [])]
+        if missing:
+            raise ValueError(f"player state is missing columns: {missing}")
+        writer = csv.DictWriter(dst, fieldnames=columns)
+        writer.writeheader()
+        for row in reader:
+            writer.writerow({c: row.get(c, "") for c in columns})
+
 def main() -> int:
     args = parse_args()
     day = snapshot_date(args.run_summary_json)
@@ -57,14 +79,20 @@ def main() -> int:
     copy(args.metadata_json, current / "rating_metadata.json")
     copy(args.course_summary_csv, current / "course_summary.csv")
     copy(args.course_difficulty_csv, current / "course_difficulty.csv")
+    copy_compact_player_state(args.player_course_records_csv, current / "player_course_state.csv")
+    copy(args.course_records_csv, current / "course_records.csv")
     copy(args.run_summary_json, current / "run_summary.json")
 
-    # One compact file per JST calendar day. A manual re-run on the same day
-    # replaces that day’s snapshot rather than creating duplicates.
+    # A manual rerun on the same day replaces that day's compact history.
     copy(args.overall_csv, history / f"{day}_overall_ranking.csv")
-    copy(args.metadata_json, history / f"{day}_rating_metadata.json")
-    copy(args.course_difficulty_csv, history / f"{day}_course_difficulty.csv")
-    print(f"Archived current rating outputs and history snapshot for {day}.")
+
+    if args.difficulty_refreshed:
+        copy(
+            args.course_difficulty_csv,
+            args.data_dir / "difficulty" / "history" / f"{day}_course_difficulty.csv",
+        )
+
+    print(f"Archived current state and compact overall history for {day}.")
     return 0
 
 

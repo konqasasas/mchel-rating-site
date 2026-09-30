@@ -1,20 +1,16 @@
-name: Update Mchel rating site
+name: Update Chelcy rating site
 
 on:
-  # 09:17 JST every day (00:17 UTC). A non-zero minute reduces the chance of
-  # delay during GitHub Actions' busy top-of-hour window.
+  # 09:17 JST every day (00:17 UTC).
   schedule:
     - cron: "17 0 * * *"
   workflow_dispatch:
 
-# The workflow needs only repository-content write access to commit the rebuilt
-# docs/ site, compact daily rating history, and the daily difficulty table.
 permissions:
   contents: write
 
-# Do not let a manual run and the scheduled run rebuild the site simultaneously.
 concurrency:
-  group: mchel-rating-update
+  group: chelcy-rating-update
   cancel-in-progress: false
 
 env:
@@ -24,7 +20,7 @@ env:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     steps:
       - name: Check out repository
@@ -43,38 +39,125 @@ jobs:
       - name: Fetch public ranking APIs
         run: python scripts/fetch_rankings.py --out-dir work/latest
 
-      - name: Recalculate the v1 difficulty table and ratings
+      - name: Decide whether to refresh Difficulty
+        id: difficulty
+        shell: bash
+        run: |
+          set -euo pipefail
+          TODAY="$(TZ=Asia/Tokyo date +%F)"
+          DAY="$(TZ=Asia/Tokyo date +%d)"
+          TODAY_VERSION="mchel_time_attack_rating_v1_difficulty_${TODAY}"
+          CURRENT_VERSION="$(cat "$DIFFICULTY_VERSION_FILE" 2>/dev/null || true)"
+          if [[ ! -f "$DIFFICULTY_TABLE" || ! -f "$DIFFICULTY_VERSION_FILE" ]]; then
+            REFRESH=true
+          elif [[ "$DAY" == "01" && "$CURRENT_VERSION" != "$TODAY_VERSION" ]]; then
+            REFRESH=true
+          else
+            REFRESH=false
+          fi
+          if [[ "$REFRESH" == "true" ]]; then
+            echo "refresh=true" >> "$GITHUB_OUTPUT"
+            echo "version=$TODAY_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "refresh=false" >> "$GITHUB_OUTPUT"
+            echo "version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Calculate current snapshot with old Difficulty baseline
+        if: steps.difficulty.outputs.refresh == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f "$DIFFICULTY_TABLE" ]]; then
+            OLD_VERSION="$(cat "$DIFFICULTY_VERSION_FILE" 2>/dev/null || echo frozen_previous)"
+            python scripts/mchel_time_attack_rating_v1.py \
+              work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
+              --out-dir work/rating_baseline \
+              --difficulty-table "$DIFFICULTY_TABLE" \
+              --difficulty-version "$OLD_VERSION"
+          else
+            echo "No previous Difficulty table; baseline is not available."
+          fi
+
+      - name: Calculate ratings
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p data/difficulty
-          VERSION="mchel_time_attack_rating_v1_difficulty_$(TZ=Asia/Tokyo date +%F)"
-          echo "Recalculating the difficulty table: $VERSION"
-          python scripts/mchel_time_attack_rating_v1.py \
-            work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
-            --out-dir work/rating \
-            --difficulty-version "$VERSION"
-          cp work/rating/course_difficulty.csv "$DIFFICULTY_TABLE"
-          printf '%s\n' "$VERSION" > "$DIFFICULTY_VERSION_FILE"
+          VERSION="${{ steps.difficulty.outputs.version }}"
+          if [[ "${{ steps.difficulty.outputs.refresh }}" == "true" ]]; then
+            echo "Refreshing monthly Difficulty table: $VERSION"
+            python scripts/mchel_time_attack_rating_v1.py \
+              work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
+              --out-dir work/rating \
+              --difficulty-version "$VERSION"
+            cp work/rating/course_difficulty.csv "$DIFFICULTY_TABLE"
+            printf '%s\n' "$VERSION" > "$DIFFICULTY_VERSION_FILE"
+          else
+            echo "Using frozen Difficulty table: $VERSION"
+            python scripts/mchel_time_attack_rating_v1.py \
+              work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv \
+              --out-dir work/rating \
+              --difficulty-table "$DIFFICULTY_TABLE" \
+              --difficulty-version "$VERSION"
+          fi
 
-      - name: Save compact history snapshot
-        run: >-
-          python scripts/archive_rating_snapshot.py
-          --overall-csv work/rating/overall_ranking.csv
-          --metadata-json work/rating/rating_metadata.json
-          --course-summary-csv work/rating/course_summary.csv
-          --course-difficulty-csv work/rating/course_difficulty.csv
-          --run-summary-json work/latest/mchel_1_12_2_run_summary_excluding_seasonal.json
-          --data-dir data
+      - name: Update compact activity log
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARGS=(
+            --previous-overall data/current/overall_ranking.csv
+            --previous-player-state data/current/player_course_state.csv
+            --previous-course-records data/current/course_records.csv
+            --current-overall work/rating/overall_ranking.csv
+            --current-player-state work/rating/player_course_records.csv
+            --current-course-records work/rating/course_records.csv
+            --run-summary-json work/latest/mchel_1_12_2_run_summary_excluding_seasonal.json
+            --activity-log data/activity/events.jsonl
+            --events-out work/rating/activity_events.json
+          )
+          if [[ -f work/rating_baseline/overall_ranking.csv ]]; then
+            ARGS+=(
+              --baseline-overall work/rating_baseline/overall_ranking.csv
+              --baseline-player-state work/rating_baseline/player_course_records.csv
+              --baseline-course-records work/rating_baseline/course_records.csv
+            )
+          fi
+          python scripts/update_activity_log.py "${ARGS[@]}"
+
+      - name: Save compact history and current state
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARGS=(
+            --overall-csv work/rating/overall_ranking.csv
+            --metadata-json work/rating/rating_metadata.json
+            --course-summary-csv work/rating/course_summary.csv
+            --course-difficulty-csv work/rating/course_difficulty.csv
+            --player-course-records-csv work/rating/player_course_records.csv
+            --course-records-csv work/rating/course_records.csv
+            --run-summary-json work/latest/mchel_1_12_2_run_summary_excluding_seasonal.json
+            --data-dir data
+          )
+          if [[ "${{ steps.difficulty.outputs.refresh }}" == "true" ]]; then
+            ARGS+=(--difficulty-refreshed)
+          fi
+          python scripts/archive_rating_snapshot.py "${ARGS[@]}"
 
       - name: Rebuild GitHub Pages site
         run: >-
           python build_site.py
           --overall-csv work/rating/overall_ranking.csv
-          --components-csv work/rating/best30_components.csv
+          --top40-components-csv work/rating/top40_components.csv
+          --player-course-records-csv work/rating/player_course_records.csv
           --metadata-json work/rating/rating_metadata.json
           --course-difficulty-csv work/rating/course_difficulty.csv
+          --course-records-csv work/rating/course_records.csv
+          --rankings-csv work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv
           --snapshot-summary work/latest/mchel_1_12_2_run_summary_excluding_seasonal.json
+          --history-dir data/history
+          --activity-log data/activity/events.jsonl
           --out-dir docs
 
       - name: Commit and push updated site
@@ -93,7 +176,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: mchel-update-diagnostics-${{ github.run_id }}
-          path: work/latest
+          name: chelcy-update-diagnostics-${{ github.run_id }}
+          path: work
           if-no-files-found: ignore
           retention-days: 7

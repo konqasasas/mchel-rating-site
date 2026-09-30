@@ -56,6 +56,7 @@ FORMULA_VERSION = "mchel_time_attack_rating_v1"
 # Overall eligibility
 ELIGIBLE_COURSE_ROW_COUNT = 100
 BEST_N = 30
+DISPLAY_N = 40
 
 # Course-difficulty multiplier
 ALPHA = 0.10
@@ -405,18 +406,17 @@ def load_frozen_difficulty_table(
         course_summary["eligible_for_overall"], "course_name"
     ].astype(str)
     frozen_by_course = frozen.set_index("course_name", drop=False)
-    missing = sorted(set(eligible_names) - set(frozen_by_course.index))
-    if missing:
-        preview = ", ".join(missing[:8])
-        suffix = " …" if len(missing) > 8 else ""
-        raise ValueError(
-            "The frozen difficulty table does not include newly eligible courses: "
-            f"{preview}{suffix}. Refresh the difficulty table deliberately."
-        )
+    # A newly eligible course that is absent from the frozen monthly table
+    # waits until the next monthly refresh instead of changing the active
+    # catalog mid-month.
+    active_names = [name for name in eligible_names if name in frozen_by_course.index]
+    if not active_names:
+        raise ValueError("No currently eligible course exists in the frozen difficulty table.")
 
     # Preserve the published table exactly for auditability, while restricting
-    # it to courses that are eligible in the current snapshot.
-    selected = frozen_by_course.loc[list(eligible_names)].copy()
+    # it to courses that are both currently eligible and present in the frozen
+    # monthly catalog.
+    selected = frozen_by_course.loc[active_names].copy()
     if "category" not in selected.columns:
         categories = course_summary.set_index("course_name")["category"]
         selected["category"] = selected.index.to_series().map(categories).fillna("")
@@ -532,44 +532,67 @@ def public_rating(raw_performance_index: pd.Series) -> pd.Series:
 
 
 def assign_tier(rating: float) -> str:
-    """Final public tier names. Boundaries use unrounded rating."""
+    """Public tier names. Boundaries use the unrounded published rating."""
     if rating >= 1300.0:
-        return "EX"
+        return "Grandmaster"
     if rating >= 1250.0:
-        return "S+"
+        return "Master I"
     if rating >= 1200.0:
-        return "S"
+        return "Master II"
     if rating >= 1150.0:
-        return "A+"
+        return "Diamond I"
     if rating >= 1100.0:
-        return "A"
+        return "Diamond II"
     if rating >= 1050.0:
-        return "B+"
+        return "Platinum I"
     if rating >= 1000.0:
-        return "B"
+        return "Platinum II"
     if rating >= 950.0:
-        return "B-"
+        return "Gold I"
     if rating >= 900.0:
-        return "C+"
+        return "Gold II"
     if rating >= 850.0:
-        return "C"
+        return "Silver I"
     if rating >= 800.0:
-        return "C-"
+        return "Silver II"
     if rating >= 750.0:
-        return "D+"
+        return "Bronze I"
     if rating >= 700.0:
-        return "D"
-    return "E"
+        return "Bronze II"
+    return "Iron"
+
+
+def assign_grade(raw_score: float) -> str:
+    """Display grade based only on Raw Score (= 100 * WR / PB)."""
+    # SS is deliberately reserved for a time tied with the course record.
+    if math.isclose(raw_score, 100.0, rel_tol=0.0, abs_tol=1e-9):
+        return "SS"
+    if raw_score >= 99.5:
+        return "S+"
+    if raw_score >= 99.0:
+        return "S"
+    if raw_score >= 98.0:
+        return "A+"
+    if raw_score >= 96.5:
+        return "A"
+    if raw_score >= 95.0:
+        return "B+"
+    if raw_score >= 92.5:
+        return "B"
+    if raw_score >= 90.0:
+        return "C+"
+    return "C"
 
 
 def calculate_player_ratings(
     eligible: pd.DataFrame,
     difficulty: pd.DataFrame,
     latest_names: pd.Series,
-) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series]:
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series, pd.DataFrame]:
     """
-    Calculate difficulty-adjusted course scores, individual Best 30, and
-    public ratings.
+    Calculate difficulty-adjusted course scores, Best 30, display Top 40,
+    and published ratings. Course ranks are recomputed from time with
+    ``method=min`` so equal times always share the same rank.
     """
     course_records = (
         eligible.groupby("course_name")["time_ms"]
@@ -600,9 +623,16 @@ def calculate_player_ratings(
         .copy()
     )
 
+    # Rank is display-only and uses competition ranking: 1, 1, 3 ...
+    work["rank"] = (
+        work.groupby("course_name")["time_ms"]
+        .rank(method="min", ascending=True)
+        .astype(int)
+    )
     work["base_course_score"] = (
         100.0 * work["course_record_time_ms"] / work["time_ms"]
     )
+    work["grade"] = [assign_grade(v) for v in work["base_course_score"]]
     work["difficulty_adjusted_course_score"] = (
         work["base_course_score"] * work["difficulty_multiplier"]
     )
@@ -628,18 +658,23 @@ def calculate_player_ratings(
     ].index
 
     official = work.loc[work["player_uuid"].isin(official_uuids)].copy()
+    official["player_name"] = official["player_uuid"].map(latest_names)
     official = official.sort_values(
         ["player_uuid", "difficulty_adjusted_course_score", "course_name"],
         ascending=[True, False, True],
         kind="stable",
     )
+    official["score_position"] = official.groupby("player_uuid").cumcount() + 1
 
-    best30 = official.groupby(
-        "player_uuid", group_keys=False
-    ).head(BEST_N).copy()
-    best30["best30_position"] = best30.groupby("player_uuid").cumcount() + 1
+    top40 = official.loc[official["score_position"] <= DISPLAY_N].copy()
+    top40 = top40.rename(columns={"score_position": "best40_position"})
+    top40["best30_position"] = top40["best40_position"].where(
+        top40["best40_position"] <= BEST_N, pd.NA
+    )
 
     weights = make_best30_weights()
+    best30 = top40.loc[top40["best40_position"] <= BEST_N].copy()
+    best30["best30_position"] = best30["best40_position"].astype(int)
     best30 = best30.merge(
         weights,
         on="best30_position",
@@ -661,19 +696,36 @@ def calculate_player_ratings(
             ),
             best_course_score=("difficulty_adjusted_course_score", "max"),
             thirtieth_course_score=("difficulty_adjusted_course_score", "min"),
+            best30_first_place_count=("rank", lambda x: int((x == 1).sum())),
         )
     )
 
     ratings["published_rating"] = public_rating(
         ratings["raw_performance_index"]
     )
-    ratings["tier"] = [
-        assign_tier(value) for value in ratings["published_rating"]
-    ]
+    ratings["tier"] = [assign_tier(value) for value in ratings["published_rating"]]
     ratings["eligible_course_count"] = ratings["player_uuid"].map(
         eligible_course_count
     )
     ratings["player_name"] = ratings["player_uuid"].map(latest_names)
+
+    first_place_counts = (
+        official.loc[official["rank"] == 1]
+        .groupby("player_uuid")["course_name"]
+        .nunique()
+    )
+    ratings["first_place_record_count"] = (
+        ratings["player_uuid"].map(first_place_counts).fillna(0).astype(int)
+    )
+
+    if "recorded_at_epoch" in official.columns:
+        last_pb = pd.to_numeric(official["recorded_at_epoch"], errors="coerce")
+        official["_recorded_at_epoch_numeric"] = last_pb
+        last_pb_by_player = official.groupby("player_uuid")["_recorded_at_epoch_numeric"].max()
+        ratings["last_pb_epoch"] = ratings["player_uuid"].map(last_pb_by_player)
+        official = official.drop(columns="_recorded_at_epoch_numeric", errors="ignore")
+    else:
+        ratings["last_pb_epoch"] = np.nan
 
     ratings = ratings.sort_values(
         ["published_rating", "player_uuid"],
@@ -682,23 +734,30 @@ def calculate_player_ratings(
     ).reset_index(drop=True)
     ratings.insert(0, "overall_rank", np.arange(1, len(ratings) + 1))
 
-    best30["player_name"] = best30["player_uuid"].map(latest_names)
+    player_meta = ratings[
+        [
+            "player_uuid", "overall_rank", "tier", "raw_performance_index",
+            "published_rating"
+        ]
+    ]
     best30 = best30.merge(
-        ratings[
-            [
-                "player_uuid",
-                "overall_rank",
-                "tier",
-                "raw_performance_index",
-                "published_rating",
-            ]
-        ],
-        on="player_uuid",
-        how="left",
-        validate="many_to_one",
+        player_meta, on="player_uuid", how="left", validate="many_to_one"
+    )
+    top40 = top40.merge(
+        player_meta, on="player_uuid", how="left", validate="many_to_one"
     )
 
-    return ratings, best30, eligible_course_count
+    # Minimal all-course state used by the simulator and activity diffing.
+    player_course_records = official[
+        [
+            "player_uuid", "player_name", "course_name", "category", "rank",
+            "time_ms", "course_record_time_ms", "first_place_difficulty",
+            "difficulty_multiplier", "base_course_score", "grade",
+            "difficulty_adjusted_course_score",
+        ]
+    ].copy()
+
+    return ratings, best30, top40, eligible_course_count, player_course_records
 
 
 # =============================================================================
@@ -828,8 +887,13 @@ def calculate(
         difficulty = load_frozen_difficulty_table(difficulty_table, course_summary)
         difficulty_source = "frozen_difficulty_table"
 
+    # The active rating catalog follows the monthly Difficulty table. New
+    # courses therefore enter on the next month-start refresh.
+    active_course_names = set(difficulty["course_name"].astype(str))
+    eligible = eligible.loc[eligible["course_name"].astype(str).isin(active_course_names)].copy()
+
     weights = make_best30_weights()
-    ratings, best30, eligible_course_counts = calculate_player_ratings(
+    ratings, best30, top40, eligible_course_counts, player_course_records = calculate_player_ratings(
         eligible=eligible,
         difficulty=difficulty,
         latest_names=latest_names,
@@ -851,6 +915,9 @@ def calculate(
         "published_rating",
         "raw_performance_index",
         "eligible_course_count",
+        "first_place_record_count",
+        "best30_first_place_count",
+        "last_pb_epoch",
         "best_course_score",
         "thirtieth_course_score",
     ]
@@ -874,6 +941,7 @@ def calculate(
         "first_place_difficulty",
         "difficulty_multiplier",
         "base_course_score",
+        "grade",
         "difficulty_adjusted_course_score",
         "weighted_contribution",
     ]
@@ -885,14 +953,52 @@ def calculate(
         ),
         output_dir / "best30_components.csv",
     )
+    top40_columns = [
+        "overall_rank", "tier", "player_uuid", "player_name",
+        "published_rating", "raw_performance_index", "best40_position",
+        "best30_position", "course_name", "category", "rank", "time_ms",
+        "course_record_time_ms", "difficulty_rank", "first_place_difficulty",
+        "difficulty_multiplier", "base_course_score", "grade",
+        "difficulty_adjusted_course_score",
+    ]
+    write_csv(
+        top40[top40_columns].sort_values(
+            ["overall_rank", "best40_position"], kind="stable"
+        ),
+        output_dir / "top40_components.csv",
+    )
+    write_csv(
+        player_course_records.sort_values(
+            ["player_uuid", "course_name"], kind="stable"
+        ),
+        output_dir / "player_course_records.csv",
+    )
+
+    # Compact per-course #1 state. Equal best times share #1.
+    record_rows = []
+    for course_name, group in eligible.groupby("course_name", sort=True):
+        wr = int(group["time_ms"].min())
+        holders = group.loc[group["time_ms"].eq(wr)].copy()
+        holders["player_name"] = holders["player_uuid"].map(latest_names)
+        category = str(group["category"].iloc[0]) if "category" in group.columns else ""
+        record_rows.append({
+            "course_name": course_name,
+            "category": category,
+            "course_record_time_ms": wr,
+            "holder_uuids": "|".join(sorted(holders["player_uuid"].astype(str))),
+            "holder_names": "|".join(sorted(holders["player_name"].fillna("").astype(str))),
+        })
+    write_csv(pd.DataFrame(record_rows), output_dir / "course_records.csv")
+
     write_csv(
         theoretical_top30,
         output_dir / "catalog_theoretical_max_top30_difficulty.csv",
     )
 
     tier_order = [
-        "E", "D", "D+", "C-", "C", "C+", "B-", "B", "B+",
-        "A", "A+", "S", "S+", "EX",
+        "Iron", "Bronze II", "Bronze I", "Silver II", "Silver I",
+        "Gold II", "Gold I", "Platinum II", "Platinum I",
+        "Diamond II", "Diamond I", "Master II", "Master I", "Grandmaster",
     ]
     tier_counts = (
         ratings["tier"]
@@ -912,7 +1018,7 @@ def calculate(
         "input_rows": int(len(raw)),
         "rows_after_player_course_deduplication": int(len(work)),
         "course_count": int(len(course_summary)),
-        "eligible_course_count": int(len(eligible_names)),
+        "eligible_course_count": int(len(active_course_names)),
         "eligible_course_rule": (
             "Course has exactly 100 valid, deduplicated player-course rows."
         ),
@@ -939,6 +1045,26 @@ def calculate(
                 "position_30_weight": float(weights["weight"].iloc[-1]),
             },
         },
+        "grade_thresholds": {
+            "SS": "Raw Score = 100.000 (tied course record)",
+            "S+": "Raw Score >= 99.5",
+            "S": "Raw Score >= 99.0",
+            "A+": "Raw Score >= 98.0",
+            "A": "Raw Score >= 96.5",
+            "B+": "Raw Score >= 95.0",
+            "B": "Raw Score >= 92.5",
+            "C+": "Raw Score >= 90.0",
+            "C": "Raw Score < 90.0",
+        },
+        "tier_thresholds": {
+            "Grandmaster": 1300, "Master I": 1250, "Master II": 1200,
+            "Diamond I": 1150, "Diamond II": 1100,
+            "Platinum I": 1050, "Platinum II": 1000,
+            "Gold I": 950, "Gold II": 900,
+            "Silver I": 850, "Silver II": 800,
+            "Bronze I": 750, "Bronze II": 700, "Iron": 100,
+        },
+        "display_top_n": DISPLAY_N,
         "course_difficulty": {
             "first_place_outlierness_raw": (
                 "ln(median(rank2..rank5 time) / rank1 time)"

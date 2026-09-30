@@ -65,9 +65,3 @@ GitHub Actions は毎日 09:17 JST に実行されます。
 - Difficulty履歴: 月次更新時だけ保存
 - Activity: 直近180日を JSONL で保存
 - プレイヤーの内部識別子は UUID を使用
-
-## 初回移行時
-
-この変更以前のリポジトリには、Activity差分計算用の `player_course_state.csv` と Top 40 用データが保存されていません。変更を反映したら **GitHub Actions の `Update Chelcy rating site` を1回手動実行**してください。
-
-初回実行では現在状態を初期化して新しい4ページを生成します。過去のRating履歴は既存の `data/history/*_overall_ranking.csv` をそのまま利用しますが、Activity履歴は新実装以降のイベントから蓄積されます。

@@ -1,8 +1,8 @@
 {
   "formula_version": "mchel_time_attack_rating_v1",
   "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-10-01",
-  "difficulty_source": "calculated_from_current_snapshot",
-  "difficulty_table": null,
+  "difficulty_source": "frozen_difficulty_table",
+  "difficulty_table": "/home/runner/work/mchel-rating-site/mchel-rating-site/data/difficulty/mchel_time_attack_rating_v1.csv",
   "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
   "input_rows": 23927,
   "rows_after_player_course_deduplication": 23927,

@@ -1,8 +1,8 @@
 {
   "formula_version": "mchel_time_attack_rating_v1",
   "difficulty_version": "mchel_time_attack_rating_v1_difficulty_2026-11-01",
-  "difficulty_source": "calculated_from_current_snapshot",
-  "difficulty_table": null,
+  "difficulty_source": "frozen_difficulty_table",
+  "difficulty_table": "/home/runner/work/mchel-rating-site/mchel-rating-site/data/difficulty/mchel_time_attack_rating_v1.csv",
   "input_csv": "/home/runner/work/mchel-rating-site/mchel-rating-site/work/latest/mchel_1_12_2_rankings_excluding_seasonal.csv",
   "input_rows": 23932,
   "rows_after_player_course_deduplication": 23932,
@@ -88,8 +88,8 @@
   },
   "tier_counts": {
     "Iron": 17,
-    "Bronze II": 12,
-    "Bronze I": 27,
+    "Bronze II": 13,
+    "Bronze I": 26,
     "Silver II": 22,
     "Silver I": 24,
     "Gold II": 20,
@@ -104,8 +104,8 @@
   },
   "catalog_constrained_theoretical_max": {
     "definition": "First place on the 30 currently highest-difficulty courses, with the current difficulty table frozen.",
-    "raw_performance_index": 105.91887657740503,
-    "published_rating": 1376.2237372316843,
+    "raw_performance_index": 105.91887657740502,
+    "published_rating": 1376.2237372316827,
     "tier": "Grandmaster"
   },
   "mathematical_formula_ceiling": {

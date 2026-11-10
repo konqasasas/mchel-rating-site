@@ -1,5 +1,5 @@
 {
-  "fetched_at_utc": "2026-11-09T06:44:04.590829+00:00",
+  "fetched_at_utc": "2026-11-10T07:25:26.060945+00:00",
   "catalog_course_count": 298,
   "excluded_categories": [
     "期間限定"
@@ -19,6 +19,6 @@
   "successful_course_count": 290,
   "failed_course_count": 0,
   "ranking_row_count": 23933,
-  "duration_seconds": 132.74,
+  "duration_seconds": 121.0,
   "sleep_seconds_per_course": 0.2
 }

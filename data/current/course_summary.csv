@@ -1,7 +1,7 @@
 ﻿course_name,category,raw_ranking_row_count,ranking_row_count,unique_players,course_record_time_ms,eligible_for_overall
 """HELLO, THE COMPUTER WORLD!""_",normal,100,100,100,280824,True
 5thタワー,kuwaty,100,100,100,60995,True
-60mとんとん走,matataki,100,100,100,3172,True
+60mとんとん走,matataki,100,100,100,3150,True
 Aequor,normal,100,100,100,110310,True
 Alley,normal,100,100,100,37747,True
 Alticlus,normal,100,100,100,243855,True
@@ -232,18 +232,18 @@ Intermediate Ordeal,normal,74,74,74,126848,False
 廃別荘,kuwaty,64,64,64,120001,False
 ジャブジャブ,matataki,63,63,63,14649,False
 challenge7,challenge,61,61,61,285884,False
-どんどこどん,matataki,60,60,60,11553,False
+どんどこどん,matataki,61,61,61,11553,False
 白い神殿,kuwaty,58,58,58,31000,False
 うおーさおー,matataki,55,55,55,45868,False
 トライセクション,hard,55,55,55,126086,False
-ビチャビチャ,matataki,52,52,52,23196,False
+ビチャビチャ,matataki,53,53,53,23196,False
 deep sea,normal,51,51,51,49346,False
 NigHt,hard,48,48,48,233912,False
 Waza09,waza,48,48,48,284963,False
 スライムでぴょーん,kuwaty,46,46,46,26442,False
 赤と白の砂漠,kuwaty,42,42,42,45400,False
 Blizzard Road,hard,37,37,37,255406,False
-うねうね,matataki,36,36,36,18301,False
+うねうね,matataki,37,37,37,18301,False
 はやいはやいアスレ HARD,kuwaty,33,33,33,29698,False
 5 Jumps to Chelcy Archive,hard,31,31,31,30291,False
 Move around,hard,31,31,31,225388,False
